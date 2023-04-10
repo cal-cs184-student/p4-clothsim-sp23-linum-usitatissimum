@@ -12,7 +12,13 @@ using namespace CGL;
 
 void Plane::collide(PointMass &pm) {
   // TODO (Part 3): Handle collisions with planes.
-
+    Vector3D last_vec(pm.last_position - point), curr_vec(pm.position - point);
+    if (dot(last_vec, normal) * dot(curr_vec, normal) < 0) {
+        Vector3D tan_p(pm.position - dot(normal.unit(), curr_vec) * normal.unit());
+        double sign(dot(last_vec, normal) < 0 ? -1.0: 1.0);
+        Vector3D corr_vec(tan_p + sign * normal * SURFACE_OFFSET - pm.last_position);
+        pm.position = pm.last_position + corr_vec * (1.0 - friction);
+    }
 }
 
 void Plane::render(GLShader &shader) {

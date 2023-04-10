@@ -26,8 +26,11 @@ out vec4 out_color;
 
 void main() {
   // YOUR CODE HERE
+  vec3 normal = normalize(v_normal).xyz;
+  vec3 light_direction = normalize(u_light_pos - v_position.xyz);
   
   // (Placeholder code. You will want to replace it.)
-  out_color = (vec4(1, 1, 1, 0) + v_normal) / 2;
-  out_color.a = 1;
+  float diffuse = max(0.0, dot(normal, light_direction));
+  float dist_light = pow(length(u_light_pos - v_position.xyz), 2.0);
+  out_color = vec4(1 * u_light_intensity * diffuse / dist_light, 1.0);
 }
