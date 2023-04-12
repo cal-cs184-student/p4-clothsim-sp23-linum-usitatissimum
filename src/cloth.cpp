@@ -232,7 +232,7 @@ float Cloth::hash_position(Vector3D pos) {
     double y((pos.y - fmod(pos.y, hspacing)) / hspacing);
     double z((pos.z - fmod(pos.z, tspacing)) / tspacing);
 
-    return pow(x, 5) + pow(y, 7) + pow(z, 11);
+    return (x * 3.0 + y) * 3.0 + z;
 }
 
 ///////////////////////////////////////////////////////
